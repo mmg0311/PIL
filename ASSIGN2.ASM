@@ -1,4 +1,5 @@
 
+
 ;convert 4digit hex no. to BCD
         .model small
         .stack 64
@@ -23,6 +24,7 @@
  msg3   db      10,13,"ENTER 5-DIGIT BCD NUMBER $"
  msg4   db      10,13,"EQUIVALENT HEX : $"
  ent    db      10,13," $"
+er     db      10,13,"PLEASE ENTER VALID DIGIT$"
  hex    db      4       dup(0)               ;4 digit hex
  choice db      0
  ans    dw      0
@@ -124,8 +126,13 @@ bcdToHex proc near
         print   msg3                 ;conversion of bcd to hex
         print   ent
         mov     cl,5
+jmp lo
+error: print er
+          jmp lo
 lo:     input
         mov     ah,00h
+cmp ax,39h
+ja	error
         sub     ax,30h
         add     ax,bcd
        cmp     cl,1
