@@ -1,5 +1,4 @@
 
-
 ;convert 4digit hex no. to BCD
         .model small
         .stack 64
@@ -126,19 +125,20 @@ bcdToHex proc near
         print   msg3                 ;conversion of bcd to hex
         print   ent
         mov     cl,5
-jmp lo
-error: print er
-          jmp lo
+        jmp lo
+error:  print er
+        print ent
+        jmp lo
 lo:     input
         mov     ah,00h
-cmp ax,39h
+        cmp     ax,39h
 ja	error
         sub     ax,30h
         add     ax,bcd
-       cmp     cl,1
-       je	hi
+        cmp     cl,1
+        je       hi
         mul     ten
-hi :   mov     bcd,ax
+hi :    mov     bcd,ax
         loop    lo
         mov     cl,4
 lo1:    mov     ax,00h
@@ -158,10 +158,10 @@ con:    add     dl,37h
         jmp     con1
 lo2:    mov     dx,00h
         pop     dx
-        cmp     dl,bl
+        cmp     dl,09h
         ja      con
         add     dl,30h
-con1:    output
+con1:   output
         dec     cl
         cmp     cl,0
         ja      lo2
